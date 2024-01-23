@@ -26,7 +26,8 @@ def index2():
 @app.get('/blog/all',
   tags = ['blog','comment'],
   summary='Retrieve all blogs',
-  description='Api call to get all blogs'
+  description='Api call to get all blogs',
+  response_description='The list of all available blogs'
   )
 def get_all_blogs(page = 1, page_size = 10):
   return {'message': f'All {page_size} blogs on page {page}'}
