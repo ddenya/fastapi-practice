@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query, Body
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 
 class BlogModel(BaseModel):
 	title: str # Ints are converted to str automatically
@@ -41,11 +41,13 @@ def create_comment(blog: BlogModel,
 	content: str = Body(...,
 		min_length=8,
 		max_length=60,
-		regex='^[a-z\s]*$')
+		regex='^[a-z\s]*$'),
+	version: List[str] = Query(['1.0','1.2','1.4'])
 	):
 	return {
 		'blog': blog,
 		'id': id,
 		'comment_id': comment_id,
-		'content': content
+		'content': content,
+		'version': version
 	}
