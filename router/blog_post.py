@@ -3,8 +3,9 @@ from pydantic import BaseModel
 from typing import Optional
 
 class BlogModel(BaseModel):
-	title: str
+	title: str # Ints are converted to str automatically
 	content: str
+	nb_comments: int
 	published: Optional[bool]
 
 router = APIRouter(
@@ -12,7 +13,15 @@ router = APIRouter(
 	tags=['blog']
 	)
 
-@router.post('/new')
-def create_blog(blog: BlogModel):
-	return blog.title
+# Path parameter
+@router.post('/new/{id}')
+# Query parameters
+def create_blog(blog: BlogModel,
+	id: int,
+	version: int = 1
+	):
+	return {
+	'id': id,
+	'data': blog,
+	'version': version}
 
