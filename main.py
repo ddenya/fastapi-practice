@@ -10,8 +10,4 @@ app.include_router(blog_post.router)
 def index():
   return {'message': "Hello World!"}
 
-@app.post('/hello')
-def index2():
-  return 'Hi'
-
 

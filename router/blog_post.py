@@ -1,4 +1,11 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
+from typing import Optional
+
+class BlogModel(BaseModel):
+	title: str
+	content: str
+	published: Optional[bool]
 
 router = APIRouter(
 	prefix='/blog',
@@ -6,6 +13,6 @@ router = APIRouter(
 	)
 
 @router.post('/new')
-def create_blog():
-	pass
+def create_blog(blog: BlogModel):
+	return blog.title
 
