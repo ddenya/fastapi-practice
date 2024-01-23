@@ -1,12 +1,22 @@
 from fastapi import APIRouter, Query, Body, Path
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict
+
+class Image(BaseModel):
+	url: str
+	alias: str
 
 class BlogModel(BaseModel):
 	title: str # Ints are converted to str automatically
 	content: str
 	nb_comments: int
 	published: Optional[bool]
+	tags: List[str]
+	metadata: Dict[str, str] = {
+	'key1':'val1',
+	'key2':'val2'
+	}
+	image: Optional[Image] = None
 
 router = APIRouter(
 	prefix='/blog',
