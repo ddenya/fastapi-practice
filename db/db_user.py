@@ -33,5 +33,9 @@ def update_user(id: int, request: UserBase, db: Session):
 
 def delete_user(id: int, db: Session):
   user = get_user(id, db)
-  db.delete(user)
+  try:
+    db.delete(user)
+    db.commit()
+  except Exception as e:
+    return {'result': False} 
   return {'result': True}
