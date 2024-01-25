@@ -16,24 +16,32 @@ def create_user(request: UserBase, db: Session):
   return new_user
 
 def get_all_users(db: Session):
-  return db.query(DbUser).all()
+  try:
+    return db.query(DbUser).all()
+  except Exception as e:
+    pass
 
 def get_user(id: int, db: Session):
-  return db.query(DbUser).filter(DbUser.id == id).first()
+  try:
+    return db.query(DbUser).filter(DbUser.id == id).first()
+  except Exception as e:
+    pass
 
 def update_user(id: int, request: UserBase, db: Session):
-  user = get_user(id, db)
+  try:
+    user = get_user(id, db)
+    user.username = request.username
+    user.email = request.email
+    user.password = Hash.bcrypt(request.password)
+    db.commit()
+    return user
+  except Exception as e:
+    return {'result': False} 
 
-  user.username = request.username
-  user.email = request.email
-  user.password = Hash.bcrypt(request.password)
-
-  db.commit()
-  return user
 
 def delete_user(id: int, db: Session):
-  user = get_user(id, db)
   try:
+    user = get_user(id, db)
     db.delete(user)
     db.commit()
   except Exception as e:
