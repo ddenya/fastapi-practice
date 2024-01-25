@@ -22,7 +22,7 @@ def get_user(id: int, db: Session):
   return db.query(DbUser).filter(DbUser.id == id).first()
 
 def update_user(id: int, request: UserBase, db: Session):
-  user = db.query(DbUser).filter(DbUser.id == id).first()
+  user = get_user(id, db)
 
   user.username = request.username
   user.email = request.email
@@ -30,3 +30,8 @@ def update_user(id: int, request: UserBase, db: Session):
 
   db.commit()
   return user
+
+def delete_user(id: int, db: Session):
+  user = get_user(id, db)
+  db.delete(user)
+  return {'result': True}
