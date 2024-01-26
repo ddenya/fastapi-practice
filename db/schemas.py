@@ -41,6 +41,7 @@ class UserDisplay(BaseModel):
 
 # Data we display to user
 class ArticleDisplay(BaseModel):
+  id: int
   title: str
   content: str
   published: bool
