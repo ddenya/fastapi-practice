@@ -38,7 +38,6 @@ def update_user(id: int, request: UserBase, db: Session):
   except Exception as e:
     return {'result': False} 
 
-
 def delete_user(id: int, db: Session):
   try:
     user = get_user(id, db)
